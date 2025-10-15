@@ -83,10 +83,14 @@ export default function Home() {
           essar: {
             stationName: 'Essar Oil',
             welcomeMessage: 'WELCOMES YOU'
+          },
+          custom: {
+            stationName: 'Fuel Station',
+            welcomeMessage: 'WELCOMES YOU'
           }
         };
         
-        if (brandDefaults[value] && value !== 'custom') {
+        if (brandDefaults[value]) {
           Object.assign(newData, brandDefaults[value]);
         }
       }
