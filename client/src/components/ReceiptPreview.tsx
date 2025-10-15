@@ -28,7 +28,7 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
           {/* Brand Logo/Header */}
           <div className="receipt-header">
             <div className="text-lg font-bold tracking-wide">{formData.stationName}</div>
-            <div className="text-[10px] mt-1">{formData.welcomeMessage}</div>
+            <div className="mt-1 text-[20px] font-bold">{formData.welcomeMessage}</div>
           </div>
 
           {/* Station Info */}
