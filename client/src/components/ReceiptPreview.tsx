@@ -31,6 +31,441 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
 
   const displayLogo = formData.brandTemplate === 'custom' ? customLogo : getBrandLogo();
 
+  // Common Header Component
+  const renderHeader = () => (
+    <div className="receipt-header">
+      {displayLogo && (
+        <img src={displayLogo} alt="Brand Logo" className="w-20 h-20 mx-auto mb-2 object-contain" />
+      )}
+      <div className="text-lg font-bold tracking-wide">{formData.stationName}</div>
+      <div className="mt-1 text-[20px] font-bold">{formData.welcomeMessage}</div>
+      <div className="divider-line"></div>
+      {formData.stationLocation && (
+        <div className="text-xs mt-2">{formData.stationLocation}</div>
+      )}
+      {formData.stationCode && (
+        <div className="text-xs">{formData.stationCode}</div>
+      )}
+    </div>
+  );
+
+  // Indian Oil Template - Standard Layout
+  const renderIndianOilTemplate = () => (
+    <>
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>TEL NO:</span>
+          <span>{formData.phoneNumber || 'N/A'}</span>
+        </div>
+      </div>
+
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>RECEIPT NO:</span>
+          <span>{formData.receiptNumber}</span>
+        </div>
+        <div className="receipt-line">
+          <span>LOCAL ID:</span>
+          <span>{formData.localId || 'N/A'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>FIP NO:</span>
+          <span>{formData.fipNumber || 'N/A'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>NOZZLE NO:</span>
+          <span>{formData.nozzleNumber || 'NO1'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>PRODUCT:</span>
+          <span>{formData.productType}</span>
+        </div>
+      </div>
+
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>PRESET TYPE:</span>
+          <span>{formData.presetType}</span>
+        </div>
+        <div className="receipt-line">
+          <span>RATE/L:</span>
+          <span>Rs. {formData.ratePerLitre.toFixed(2)}</span>
+        </div>
+        <div className="receipt-line">
+          <span>VOLUME:</span>
+          <span>{formData.volume.toFixed(2)} L</span>
+        </div>
+        <div className="receipt-line receipt-amount">
+          <span>AMOUNT:</span>
+          <span>Rs. {formData.amount.toFixed(2)}</span>
+        </div>
+        <div className="receipt-line">
+          <span>ATOT:</span>
+          <span>{formData.atotCode || 'N/A'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>VTOT:</span>
+          <span>{formData.vtotCode || 'N/A'}</span>
+        </div>
+      </div>
+
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>VEHICLE NO:</span>
+          <span>{formData.vehicleNumber || 'Not Entered'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>MOBILE NO:</span>
+          <span>{formData.mobileNumber || 'Not Entered'}</span>
+        </div>
+      </div>
+
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>DATE:</span>
+          <span>{formatDate(formData.billDate)}</span>
+        </div>
+        <div className="receipt-line">
+          <span>TIME:</span>
+          <span>{formData.billTime}</span>
+        </div>
+      </div>
+
+      {renderRegulatoryInfo()}
+    </>
+  );
+
+  // Bharat Petroleum Template - Product First
+  const renderBharatTemplate = () => (
+    <>
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>DATE:</span>
+          <span>{formatDate(formData.billDate)}</span>
+        </div>
+        <div className="receipt-line">
+          <span>TIME:</span>
+          <span>{formData.billTime}</span>
+        </div>
+        <div className="receipt-line">
+          <span>TEL NO:</span>
+          <span>{formData.phoneNumber || 'N/A'}</span>
+        </div>
+      </div>
+
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>PRODUCT:</span>
+          <span>{formData.productType}</span>
+        </div>
+        <div className="receipt-line">
+          <span>NOZZLE NO:</span>
+          <span>{formData.nozzleNumber || 'NO1'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>RECEIPT NO:</span>
+          <span>{formData.receiptNumber}</span>
+        </div>
+        <div className="receipt-line">
+          <span>LOCAL ID:</span>
+          <span>{formData.localId || 'N/A'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>FIP NO:</span>
+          <span>{formData.fipNumber || 'N/A'}</span>
+        </div>
+      </div>
+
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>RATE/L:</span>
+          <span>Rs. {formData.ratePerLitre.toFixed(2)}</span>
+        </div>
+        <div className="receipt-line">
+          <span>VOLUME:</span>
+          <span>{formData.volume.toFixed(2)} L</span>
+        </div>
+        <div className="receipt-line receipt-amount">
+          <span>AMOUNT:</span>
+          <span>Rs. {formData.amount.toFixed(2)}</span>
+        </div>
+        <div className="receipt-line">
+          <span>PRESET TYPE:</span>
+          <span>{formData.presetType}</span>
+        </div>
+      </div>
+
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>ATOT:</span>
+          <span>{formData.atotCode || 'N/A'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>VTOT:</span>
+          <span>{formData.vtotCode || 'N/A'}</span>
+        </div>
+      </div>
+
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>VEHICLE NO:</span>
+          <span>{formData.vehicleNumber || 'Not Entered'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>MOBILE NO:</span>
+          <span>{formData.mobileNumber || 'Not Entered'}</span>
+        </div>
+      </div>
+
+      {renderRegulatoryInfo()}
+    </>
+  );
+
+  // HP Oil Template - Customer Info Early
+  const renderHPTemplate = () => (
+    <>
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>RECEIPT NO:</span>
+          <span>{formData.receiptNumber}</span>
+        </div>
+        <div className="receipt-line">
+          <span>LOCAL ID:</span>
+          <span>{formData.localId || 'N/A'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>TEL NO:</span>
+          <span>{formData.phoneNumber || 'N/A'}</span>
+        </div>
+      </div>
+
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>VEHICLE NO:</span>
+          <span>{formData.vehicleNumber || 'Not Entered'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>MOBILE NO:</span>
+          <span>{formData.mobileNumber || 'Not Entered'}</span>
+        </div>
+      </div>
+
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>PRODUCT:</span>
+          <span>{formData.productType}</span>
+        </div>
+        <div className="receipt-line">
+          <span>NOZZLE NO:</span>
+          <span>{formData.nozzleNumber || 'NO1'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>FIP NO:</span>
+          <span>{formData.fipNumber || 'N/A'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>PRESET TYPE:</span>
+          <span>{formData.presetType}</span>
+        </div>
+      </div>
+
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>RATE/L:</span>
+          <span>Rs. {formData.ratePerLitre.toFixed(2)}</span>
+        </div>
+        <div className="receipt-line">
+          <span>VOLUME:</span>
+          <span>{formData.volume.toFixed(2)} L</span>
+        </div>
+        <div className="receipt-line receipt-amount">
+          <span>AMOUNT:</span>
+          <span>Rs. {formData.amount.toFixed(2)}</span>
+        </div>
+      </div>
+
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>ATOT:</span>
+          <span>{formData.atotCode || 'N/A'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>VTOT:</span>
+          <span>{formData.vtotCode || 'N/A'}</span>
+        </div>
+      </div>
+
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>DATE:</span>
+          <span>{formatDate(formData.billDate)}</span>
+        </div>
+        <div className="receipt-line">
+          <span>TIME:</span>
+          <span>{formData.billTime}</span>
+        </div>
+      </div>
+
+      {renderRegulatoryInfo()}
+    </>
+  );
+
+  // Essar Oil Template - Date/Time at Top
+  const renderEssarTemplate = () => (
+    <>
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>DATE:</span>
+          <span>{formatDate(formData.billDate)}</span>
+        </div>
+        <div className="receipt-line">
+          <span>TIME:</span>
+          <span>{formData.billTime}</span>
+        </div>
+      </div>
+
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>RECEIPT NO:</span>
+          <span>{formData.receiptNumber}</span>
+        </div>
+        <div className="receipt-line">
+          <span>LOCAL ID:</span>
+          <span>{formData.localId || 'N/A'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>FIP NO:</span>
+          <span>{formData.fipNumber || 'N/A'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>TEL NO:</span>
+          <span>{formData.phoneNumber || 'N/A'}</span>
+        </div>
+      </div>
+
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>PRODUCT:</span>
+          <span>{formData.productType}</span>
+        </div>
+        <div className="receipt-line">
+          <span>NOZZLE NO:</span>
+          <span>{formData.nozzleNumber || 'NO1'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>VEHICLE NO:</span>
+          <span>{formData.vehicleNumber || 'Not Entered'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>MOBILE NO:</span>
+          <span>{formData.mobileNumber || 'Not Entered'}</span>
+        </div>
+      </div>
+
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>PRESET TYPE:</span>
+          <span>{formData.presetType}</span>
+        </div>
+        <div className="receipt-line">
+          <span>RATE/L:</span>
+          <span>Rs. {formData.ratePerLitre.toFixed(2)}</span>
+        </div>
+        <div className="receipt-line">
+          <span>VOLUME:</span>
+          <span>{formData.volume.toFixed(2)} L</span>
+        </div>
+        <div className="receipt-line receipt-amount">
+          <span>AMOUNT:</span>
+          <span>Rs. {formData.amount.toFixed(2)}</span>
+        </div>
+      </div>
+
+      <div className="receipt-section">
+        <div className="receipt-line">
+          <span>ATOT:</span>
+          <span>{formData.atotCode || 'N/A'}</span>
+        </div>
+        <div className="receipt-line">
+          <span>VTOT:</span>
+          <span>{formData.vtotCode || 'N/A'}</span>
+        </div>
+      </div>
+
+      {renderRegulatoryInfo()}
+    </>
+  );
+
+  // Regulatory Information Component (shared)
+  const renderRegulatoryInfo = () => (
+    <div className="receipt-section text-[9px]">
+      {formData.cstNumber && (
+        <div className="receipt-line">
+          <span>CSI NO:</span>
+          <span>{formData.cstNumber}</span>
+        </div>
+      )}
+      {formData.lstNumber && (
+        <div className="receipt-line">
+          <span>LST NO:</span>
+          <span>{formData.lstNumber}</span>
+        </div>
+      )}
+      {formData.vatNumber && (
+        <div className="receipt-line">
+          <span>VAT NO:</span>
+          <span>{formData.vatNumber}</span>
+        </div>
+      )}
+      {formData.attendant && (
+        <div className="receipt-line">
+          <span>ATTENDANT ID:</span>
+          <span>{formData.attendant}</span>
+        </div>
+      )}
+      {formData.fccDate && (
+        <div className="receipt-line">
+          <span>FCC DATE:</span>
+          <span>{formData.fccDate}</span>
+        </div>
+      )}
+      {formData.fccTime && (
+        <div className="receipt-line">
+          <span>FCC TIME:</span>
+          <span>{formData.fccTime}</span>
+        </div>
+      )}
+    </div>
+  );
+
+  // Footer Component (shared)
+  const renderFooter = () => (
+    <div className="receipt-footer">
+      <div className="text-[11px] font-bold tracking-wide">
+        {formData.footerMessage.split('\n').map((line: string, i: number) => (
+          <div key={i}>{line}</div>
+        ))}
+      </div>
+    </div>
+  );
+
+  // Select template based on brand
+  const renderTemplate = () => {
+    switch (formData.brandTemplate) {
+      case 'indianoil':
+        return renderIndianOilTemplate();
+      case 'bharat':
+        return renderBharatTemplate();
+      case 'hp':
+        return renderHPTemplate();
+      case 'essar':
+        return renderEssarTemplate();
+      case 'custom':
+      default:
+        return renderIndianOilTemplate(); // Default to Indian Oil layout for custom
+    }
+  };
+
   return (
     <div className="flex items-center justify-center p-6 min-h-screen">
       <div className="receipt-paper">
@@ -42,154 +477,14 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
           {/* Torn Paper Top */}
           <div className="torn-top"></div>
 
-          {/* Logo + Fuel Brand + Welcome Message */}
-          <div className="receipt-header">
-            {displayLogo && (
-              <img src={displayLogo} alt="Brand Logo" className="w-20 h-20 mx-auto mb-2 object-contain" />
-            )}
-            <div className="text-lg font-bold tracking-wide">{formData.stationName}</div>
-            <div className="mt-1 text-[20px] font-bold">{formData.welcomeMessage}</div>
-            <div className="divider-line"></div>
-            {formData.stationLocation && (
-              <div className="text-xs mt-2">{formData.stationLocation}</div>
-            )}
-            {formData.stationCode && (
-              <div className="text-xs">{formData.stationCode}</div>
-            )}
-          </div>
+          {/* Header */}
+          {renderHeader()}
 
-          {/* Station Information */}
-          <div className="receipt-section">
-            <div className="receipt-line">
-              <span>TEL NO:</span>
-              <span>{formData.phoneNumber || 'N/A'}</span>
-            </div>
-          </div>
-
-          {/* Receipt Details */}
-          <div className="receipt-section">
-            <div className="receipt-line">
-              <span>RECEIPT NO:</span>
-              <span>{formData.receiptNumber}</span>
-            </div>
-            <div className="receipt-line">
-              <span>LOCAL ID:</span>
-              <span>{formData.localId || 'N/A'}</span>
-            </div>
-            <div className="receipt-line">
-              <span>FIP NO:</span>
-              <span>{formData.fipNumber || 'N/A'}</span>
-            </div>
-            <div className="receipt-line">
-              <span>NOZZLE NO:</span>
-              <span>{formData.nozzleNumber || 'NO1'}</span>
-            </div>
-            <div className="receipt-line">
-              <span>PRODUCT:</span>
-              <span>{formData.productType}</span>
-            </div>
-          </div>
-
-          {/* Transaction Details */}
-          <div className="receipt-section">
-            <div className="receipt-line">
-              <span>PRESET TYPE:</span>
-              <span>{formData.presetType}</span>
-            </div>
-            <div className="receipt-line">
-              <span>RATE/L:</span>
-              <span>Rs. {formData.ratePerLitre.toFixed(2)}</span>
-            </div>
-            <div className="receipt-line">
-              <span>VOLUME:</span>
-              <span>{formData.volume.toFixed(2)} L</span>
-            </div>
-            <div className="receipt-line receipt-amount">
-              <span>AMOUNT:</span>
-              <span>Rs. {formData.amount.toFixed(2)}</span>
-            </div>
-            <div className="receipt-line">
-              <span>ATOT:</span>
-              <span>{formData.atotCode || 'N/A'}</span>
-            </div>
-            <div className="receipt-line">
-              <span>VTOT:</span>
-              <span>{formData.vtotCode || 'N/A'}</span>
-            </div>
-          </div>
-
-          {/* Vehicle & Mobile */}
-          <div className="receipt-section">
-            <div className="receipt-line">
-              <span>VEHICLE NO:</span>
-              <span>{formData.vehicleNumber || 'Not Entered'}</span>
-            </div>
-            <div className="receipt-line">
-              <span>MOBILE NO:</span>
-              <span>{formData.mobileNumber || 'Not Entered'}</span>
-            </div>
-          </div>
-
-          {/* Date & Time */}
-          <div className="receipt-section">
-            <div className="receipt-line">
-              <span>DATE:</span>
-              <span>{formatDate(formData.billDate)}</span>
-            </div>
-            <div className="receipt-line">
-              <span>TIME:</span>
-              <span>{formData.billTime}</span>
-            </div>
-          </div>
-
-          {/* Regulatory Information */}
-          <div className="receipt-section text-[9px]">
-            {formData.cstNumber && (
-              <div className="receipt-line">
-                <span>CSI NO:</span>
-                <span>{formData.cstNumber}</span>
-              </div>
-            )}
-            {formData.lstNumber && (
-              <div className="receipt-line">
-                <span>LST NO:</span>
-                <span>{formData.lstNumber}</span>
-              </div>
-            )}
-            {formData.vatNumber && (
-              <div className="receipt-line">
-                <span>VAT NO:</span>
-                <span>{formData.vatNumber}</span>
-              </div>
-            )}
-            {formData.attendant && (
-              <div className="receipt-line">
-                <span>ATTENDANT ID:</span>
-                <span>{formData.attendant}</span>
-              </div>
-            )}
-            {formData.fccDate && (
-              <div className="receipt-line">
-                <span>FCC DATE:</span>
-                <span>{formData.fccDate}</span>
-              </div>
-            )}
-            {formData.fccTime && (
-              <div className="receipt-line">
-                <span>FCC TIME:</span>
-                <span>{formData.fccTime}</span>
-              </div>
-            )}
-          </div>
+          {/* Brand-specific Template */}
+          {renderTemplate()}
 
           {/* Footer */}
-          <div className="receipt-footer">
-            <div className="text-[11px] font-bold tracking-wide">
-              {formData.footerMessage.split('\n').map((line: string, i: number) => (
-                <div key={i}>{line}</div>
-              ))}
-            </div>
-          </div>
+          {renderFooter()}
 
           {/* Torn Paper Bottom */}
           <div className="torn-bottom"></div>
