@@ -573,12 +573,16 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
           top: 0;
           left: 0;
           right: 0;
-          height: 8px;
-          background: #fff;
-          background-image: 
-            radial-gradient(circle at 3px 0px, transparent 3px, #fff 3px);
-          background-size: 6px 8px;
-          background-position: 0 0;
+          height: 6px;
+          background: linear-gradient(
+            -45deg,
+            transparent 33.33%,
+            #f8f8f8 33.33%,
+            #f8f8f8 66.66%,
+            transparent 66.66%
+          );
+          background-size: 8px 6px;
+          background-repeat: repeat-x;
         }
 
         .torn-bottom {
@@ -586,12 +590,16 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
           bottom: 0;
           left: 0;
           right: 0;
-          height: 8px;
-          background: #fff;
-          background-image: 
-            radial-gradient(circle at 3px 8px, transparent 3px, #fff 3px);
-          background-size: 6px 8px;
-          background-position: 0 0;
+          height: 6px;
+          background: linear-gradient(
+            45deg,
+            transparent 33.33%,
+            #f8f8f8 33.33%,
+            #f8f8f8 66.66%,
+            transparent 66.66%
+          );
+          background-size: 8px 6px;
+          background-repeat: repeat-x;
         }
 
         @media print {
