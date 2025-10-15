@@ -32,6 +32,12 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
               <img src={customLogo} alt="Logo" className="w-20 h-20 mx-auto mb-2 object-contain" />
             )}
             <div className="text-lg font-bold tracking-wide">{formData.stationName}</div>
+            {formData.stationLocation && (
+              <div className="text-xs mt-1">{formData.stationLocation}</div>
+            )}
+            {formData.stationCode && (
+              <div className="text-xs">Station Code: {formData.stationCode}</div>
+            )}
             <div className="mt-1 text-[20px] font-bold">{formData.welcomeMessage}</div>
           </div>
 
