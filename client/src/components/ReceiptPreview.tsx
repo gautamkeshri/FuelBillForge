@@ -33,22 +33,16 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
             )}
             <div className="text-lg font-bold tracking-wide">{formData.stationName}</div>
             <div className="mt-1 text-[20px] font-bold">{formData.welcomeMessage}</div>
+            {formData.stationLocation && (
+              <div className="text-xs mt-2">{formData.stationLocation}</div>
+            )}
+            {formData.stationCode && (
+              <div className="text-xs">{formData.stationCode}</div>
+            )}
           </div>
 
           {/* Station Information */}
           <div className="receipt-section">
-            {formData.stationLocation && (
-              <div className="receipt-line">
-                <span>LOCATION:</span>
-                <span>{formData.stationLocation}</span>
-              </div>
-            )}
-            {formData.stationCode && (
-              <div className="receipt-line">
-                <span>STATION CODE:</span>
-                <span>{formData.stationCode}</span>
-              </div>
-            )}
             <div className="receipt-line">
               <span>TEL NO:</span>
               <span>{formData.phoneNumber || 'N/A'}</span>
@@ -61,12 +55,10 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
               <span>RECEIPT NO:</span>
               <span>{formData.receiptNumber}</span>
             </div>
-            {formData.localId && (
-              <div className="receipt-line">
-                <span>LOCAL ID:</span>
-                <span>{formData.localId}</span>
-              </div>
-            )}
+            <div className="receipt-line">
+              <span>LOCAL ID:</span>
+              <span>{formData.localId || 'N/A'}</span>
+            </div>
             <div className="receipt-line">
               <span>FIP NO:</span>
               <span>{formData.fipNumber || 'N/A'}</span>

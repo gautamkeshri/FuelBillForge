@@ -47,15 +47,17 @@ export default function Home() {
       const newData = { ...prev, [field]: value };
       
       // Auto-calculate based on preset type
-      if (field === 'ratePerLitre' || field === 'volume' || field === 'amount') {
-        if (prev.presetType === 'Amount' && (field === 'ratePerLitre' || field === 'amount')) {
+      if (field === 'ratePerLitre' || field === 'volume' || field === 'amount' || field === 'presetType') {
+        const currentPresetType = field === 'presetType' ? value : prev.presetType;
+        
+        if (currentPresetType === 'Amount' && (field === 'ratePerLitre' || field === 'amount' || field === 'presetType')) {
           // Calculate volume when amount or rate changes
           const rate = field === 'ratePerLitre' ? value : prev.ratePerLitre;
           const amt = field === 'amount' ? value : prev.amount;
           if (rate > 0) {
             newData.volume = parseFloat((amt / rate).toFixed(2));
           }
-        } else if (prev.presetType === 'Litres' && (field === 'ratePerLitre' || field === 'volume')) {
+        } else if (currentPresetType === 'Litres' && (field === 'ratePerLitre' || field === 'volume' || field === 'presetType')) {
           // Calculate amount when volume or rate changes
           const rate = field === 'ratePerLitre' ? value : prev.ratePerLitre;
           const vol = field === 'volume' ? value : prev.volume;
