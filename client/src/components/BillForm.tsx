@@ -4,16 +4,39 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Upload, RefreshCw } from "lucide-react";
+import { Upload, RefreshCw, X } from "lucide-react";
 import BrandSelector from "./BrandSelector";
 
 interface BillFormProps {
   formData: any;
   onFormChange: (field: string, value: any) => void;
   onGenerateCodes: () => void;
+  customLogo?: string;
+  onLogoUpload?: (logoUrl: string) => void;
+  onLogoRemove?: () => void;
 }
 
-export default function BillForm({ formData, onFormChange, onGenerateCodes }: BillFormProps) {
+export default function BillForm({ 
+  formData, 
+  onFormChange, 
+  onGenerateCodes,
+  customLogo,
+  onLogoUpload,
+  onLogoRemove 
+}: BillFormProps) {
+  
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && onLogoUpload) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        onLogoUpload(reader.result as string);
+        onFormChange('brandTemplate', 'custom');
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="space-y-6 p-6">
       <h2 className="text-xl font-semibold">Bill Generator</h2>
@@ -22,6 +45,44 @@ export default function BillForm({ formData, onFormChange, onGenerateCodes }: Bi
         selectedBrand={formData.brandTemplate} 
         onBrandChange={(brand) => onFormChange('brandTemplate', brand)} 
       />
+
+      {formData.brandTemplate === 'custom' && (
+        <Card className="p-4 space-y-3">
+          <h3 className="font-medium text-sm">Custom Logo</h3>
+          
+          {customLogo ? (
+            <div className="flex items-center gap-3">
+              <img src={customLogo} alt="Custom logo" className="w-16 h-16 object-contain" />
+              <Button 
+                onClick={onLogoRemove} 
+                variant="outline" 
+                size="sm"
+                data-testid="button-remove-logo"
+              >
+                <X className="w-4 h-4 mr-2" />
+                Remove Logo
+              </Button>
+            </div>
+          ) : (
+            <div>
+              <Label htmlFor="logoUpload" className="cursor-pointer">
+                <div className="border-2 border-dashed rounded-md p-6 text-center hover-elevate active-elevate-2 transition-all">
+                  <Upload className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+                  <p className="text-sm text-muted-foreground">Click to upload logo</p>
+                </div>
+                <Input
+                  id="logoUpload"
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleLogoUpload}
+                  data-testid="input-logo-upload"
+                />
+              </Label>
+            </div>
+          )}
+        </Card>
+      )}
 
       <Card className="p-4 space-y-4">
         <h3 className="font-medium text-sm">Station Information</h3>

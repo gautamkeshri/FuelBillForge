@@ -5,6 +5,7 @@ import ActionBar from '@/components/ActionBar';
 
 export default function Home() {
   const receiptRef = useRef<HTMLDivElement>(null);
+  const [customLogo, setCustomLogo] = useState<string>('');
   
   const [formData, setFormData] = useState({
     brandTemplate: 'bharat',
@@ -80,7 +81,7 @@ export default function Home() {
           }
         };
         
-        if (brandDefaults[value]) {
+        if (brandDefaults[value] && value !== 'custom') {
           Object.assign(newData, brandDefaults[value]);
         }
       }
@@ -103,6 +104,14 @@ export default function Home() {
   useEffect(() => {
     handleGenerateCodes();
   }, []);
+
+  const handleLogoUpload = (logoUrl: string) => {
+    setCustomLogo(logoUrl);
+  };
+
+  const handleLogoRemove = () => {
+    setCustomLogo('');
+  };
 
   const handlePrint = () => {
     window.print();
@@ -165,6 +174,7 @@ export default function Home() {
         welcomeMessage: 'WELCOMES YOU',
         footerMessage: 'Thank You! Visit Again'
       });
+      setCustomLogo('');
     }
   };
 
@@ -182,11 +192,14 @@ export default function Home() {
             formData={formData} 
             onFormChange={handleFormChange}
             onGenerateCodes={handleGenerateCodes}
+            customLogo={customLogo}
+            onLogoUpload={handleLogoUpload}
+            onLogoRemove={handleLogoRemove}
           />
         </div>
         
         <div className="lg:sticky lg:top-24 lg:h-[calc(100vh-120px)] overflow-y-auto">
-          <ReceiptPreview ref={receiptRef} formData={formData} />
+          <ReceiptPreview ref={receiptRef} formData={formData} customLogo={customLogo} />
         </div>
       </div>
     </div>

@@ -2,9 +2,10 @@ import { forwardRef } from 'react';
 
 interface ReceiptPreviewProps {
   formData: any;
+  customLogo?: string;
 }
 
-const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formData }, ref) => {
+const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formData, customLogo }, ref) => {
   const formatDate = (dateStr: string) => {
     if (!dateStr) return '';
     const date = new Date(dateStr);
@@ -27,6 +28,9 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
 
           {/* Brand Logo/Header */}
           <div className="receipt-header">
+            {customLogo && formData.brandTemplate === 'custom' && (
+              <img src={customLogo} alt="Logo" className="w-20 h-20 mx-auto mb-2 object-contain" />
+            )}
             <div className="text-lg font-bold tracking-wide">{formData.stationName}</div>
             <div className="mt-1 text-[20px] font-bold">{formData.welcomeMessage}</div>
           </div>
