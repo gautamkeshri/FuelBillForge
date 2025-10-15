@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { Upload } from "lucide-react";
 
 interface BrandSelectorProps {
   selectedBrand: string;
@@ -11,6 +12,7 @@ const brands = [
   { id: 'bharat', name: 'Bharat Petroleum', icon: '⛽' },
   { id: 'hp', name: 'HP Oil', icon: '🏭' },
   { id: 'essar', name: 'Essar Oil', icon: '🔧' },
+  { id: 'custom', name: 'Custom', icon: null },
 ];
 
 export default function BrandSelector({ selectedBrand, onBrandChange }: BrandSelectorProps) {
@@ -28,7 +30,11 @@ export default function BrandSelector({ selectedBrand, onBrandChange }: BrandSel
             onClick={() => onBrandChange(brand.id)}
           >
             <div className="flex items-center gap-3">
-              <div className="text-2xl">{brand.icon}</div>
+              {brand.icon ? (
+                <div className="text-2xl">{brand.icon}</div>
+              ) : (
+                <Upload className="w-6 h-6 text-muted-foreground" />
+              )}
               <div className="text-sm font-medium">{brand.name}</div>
             </div>
           </Card>
