@@ -153,6 +153,30 @@ export default function BillForm({
             </div>
 
             <div>
+              <Label htmlFor="localId" className="text-sm">Local ID</Label>
+              <Input
+                id="localId"
+                data-testid="input-local-id"
+                value={formData.localId}
+                onChange={(e) => onFormChange('localId', e.target.value)}
+                placeholder="Optional"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <Label htmlFor="fipNumber" className="text-sm">FIP Number</Label>
+              <Input
+                id="fipNumber"
+                data-testid="input-fip-number"
+                value={formData.fipNumber}
+                onChange={(e) => onFormChange('fipNumber', e.target.value)}
+                placeholder="Optional"
+              />
+            </div>
+
+            <div>
               <Label htmlFor="nozzleNumber" className="text-sm">Nozzle</Label>
               <Input
                 id="nozzleNumber"
@@ -333,37 +357,74 @@ export default function BillForm({
         <div className="space-y-3">
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <Label htmlFor="gstTin" className="text-sm">GST TIN</Label>
+              <Label htmlFor="cstNumber" className="text-sm">CSI Number</Label>
               <Input
-                id="gstTin"
-                data-testid="input-gst-tin"
-                value={formData.gstTin}
-                onChange={(e) => onFormChange('gstTin', e.target.value)}
+                id="cstNumber"
+                data-testid="input-cst-number"
+                value={formData.cstNumber}
+                onChange={(e) => onFormChange('cstNumber', e.target.value)}
                 placeholder="Optional"
               />
             </div>
 
             <div>
-              <Label htmlFor="txnNumber" className="text-sm">TXN Number</Label>
+              <Label htmlFor="lstNumber" className="text-sm">LST Number</Label>
               <Input
-                id="txnNumber"
-                data-testid="input-txn-number"
-                value={formData.txnNumber}
-                onChange={(e) => onFormChange('txnNumber', e.target.value)}
+                id="lstNumber"
+                data-testid="input-lst-number"
+                value={formData.lstNumber}
+                onChange={(e) => onFormChange('lstNumber', e.target.value)}
                 placeholder="Optional"
               />
             </div>
           </div>
 
-          <div>
-            <Label htmlFor="attendant" className="text-sm">Attendant</Label>
-            <Input
-              id="attendant"
-              data-testid="input-attendant"
-              value={formData.attendant}
-              onChange={(e) => onFormChange('attendant', e.target.value)}
-              placeholder="Not Available"
-            />
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <Label htmlFor="vatNumber" className="text-sm">VAT Number</Label>
+              <Input
+                id="vatNumber"
+                data-testid="input-vat-number"
+                value={formData.vatNumber}
+                onChange={(e) => onFormChange('vatNumber', e.target.value)}
+                placeholder="Optional"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="attendant" className="text-sm">Attendant ID</Label>
+              <Input
+                id="attendant"
+                data-testid="input-attendant"
+                value={formData.attendant}
+                onChange={(e) => onFormChange('attendant', e.target.value)}
+                placeholder="Not Available"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <Label htmlFor="fccDate" className="text-sm">FCC Date</Label>
+              <Input
+                id="fccDate"
+                data-testid="input-fcc-date"
+                type="date"
+                value={formData.fccDate}
+                onChange={(e) => onFormChange('fccDate', e.target.value)}
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="fccTime" className="text-sm">FCC Time</Label>
+              <Input
+                id="fccTime"
+                data-testid="input-fcc-time"
+                type="time"
+                value={formData.fccTime}
+                onChange={(e) => onFormChange('fccTime', e.target.value)}
+              />
+            </div>
           </div>
         </div>
       </Card>

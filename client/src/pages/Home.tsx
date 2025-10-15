@@ -14,6 +14,7 @@ export default function Home() {
     stationCode: '73',
     phoneNumber: 'NO: 12345',
     receiptNumber: '3294',
+    localId: '',
     nozzleNumber: 'NO1',
     fipNumber: '',
     productType: 'Petrol',
@@ -35,6 +36,8 @@ export default function Home() {
     txnNumber: '',
     attendant: 'Not Available',
     fccNumber: 'Not Available',
+    fccDate: '',
+    fccTime: '',
     welcomeMessage: 'WELCOMES YOU',
     footerMessage: 'Thank You! Visit Again'
   });
@@ -150,6 +153,7 @@ export default function Home() {
         stationCode: '73',
         phoneNumber: 'NO: 12345',
         receiptNumber: String(Math.floor(Math.random() * 9000) + 1000),
+        localId: '',
         nozzleNumber: 'NO1',
         fipNumber: '',
         productType: 'Petrol',
@@ -171,6 +175,8 @@ export default function Home() {
         txnNumber: '',
         attendant: 'Not Available',
         fccNumber: 'Not Available',
+        fccDate: '',
+        fccTime: '',
         welcomeMessage: 'WELCOMES YOU',
         footerMessage: 'Thank You! Visit Again'
       });

@@ -26,79 +26,67 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
           {/* Zigzag Top Border */}
           <div className="zigzag-top"></div>
 
-          {/* Brand Logo/Header */}
+          {/* Logo + Fuel Brand + Welcome Message */}
           <div className="receipt-header">
             {customLogo && formData.brandTemplate === 'custom' && (
               <img src={customLogo} alt="Logo" className="w-20 h-20 mx-auto mb-2 object-contain" />
             )}
             <div className="text-lg font-bold tracking-wide">{formData.stationName}</div>
-            {formData.stationLocation && (
-              <div className="text-xs mt-1">{formData.stationLocation}</div>
-            )}
-            {formData.stationCode && (
-              <div className="text-xs">Station Code: {formData.stationCode}</div>
-            )}
             <div className="mt-1 text-[20px] font-bold">{formData.welcomeMessage}</div>
           </div>
 
-          {/* Station Info */}
+          {/* Station Information */}
           <div className="receipt-section">
+            {formData.stationLocation && (
+              <div className="receipt-line">
+                <span>LOCATION:</span>
+                <span>{formData.stationLocation}</span>
+              </div>
+            )}
+            {formData.stationCode && (
+              <div className="receipt-line">
+                <span>STATION CODE:</span>
+                <span>{formData.stationCode}</span>
+              </div>
+            )}
             <div className="receipt-line">
               <span>TEL NO:</span>
               <span>{formData.phoneNumber || 'N/A'}</span>
             </div>
+          </div>
+
+          {/* Receipt Details */}
+          <div className="receipt-section">
             <div className="receipt-line">
               <span>RECEIPT NO:</span>
               <span>{formData.receiptNumber}</span>
             </div>
+            {formData.localId && (
+              <div className="receipt-line">
+                <span>LOCAL ID:</span>
+                <span>{formData.localId}</span>
+              </div>
+            )}
             <div className="receipt-line">
               <span>FIP NO:</span>
               <span>{formData.fipNumber || 'N/A'}</span>
             </div>
             <div className="receipt-line">
-              <span>NOZZLE:</span>
+              <span>NOZZLE NO:</span>
               <span>{formData.nozzleNumber || 'NO1'}</span>
             </div>
-          </div>
-
-          {/* Product Details */}
-          <div className="receipt-section">
             <div className="receipt-line">
               <span>PRODUCT:</span>
               <span>{formData.productType}</span>
-            </div>
-            <div className="receipt-line">
-              <span>PRESET TYPE:</span>
-              <span>{formData.presetType}</span>
-            </div>
-            <div className="receipt-line">
-              <span>CUSTOMER NAME:</span>
-              <span>{formData.customerName || 'N/A'}</span>
             </div>
           </div>
 
           {/* Transaction Details */}
           <div className="receipt-section">
             <div className="receipt-line">
-              <span>DATE:</span>
-              <span>{formatDate(formData.billDate)}</span>
+              <span>PRESET TYPE:</span>
+              <span>{formData.presetType}</span>
             </div>
-            <div className="receipt-line">
-              <span>TIME:</span>
-              <span>{formData.billTime}</span>
-            </div>
-            <div className="receipt-line">
-              <span>LST NO:</span>
-              <span>{formData.lstNumber || 'N/A'}</span>
-            </div>
-            <div className="receipt-line">
-              <span>ATTENDANT NO:</span>
-              <span>{formData.attendant}</span>
-            </div>
-          </div>
-
-          {/* Bill Calculation - Bold Section */}
-          <div className="receipt-section receipt-totals">
             <div className="receipt-line">
               <span>RATE/L:</span>
               <span>Rs. {formData.ratePerLitre.toFixed(2)}</span>
@@ -111,53 +99,79 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
               <span>AMOUNT:</span>
               <span>Rs. {formData.amount.toFixed(2)}</span>
             </div>
-          </div>
-
-          {/* Transaction Codes */}
-          <div className="receipt-section">
-            <div className="receipt-line">
-              <span>VTOT:</span>
-              <span>{formData.vtotCode || 'N/A'}</span>
-            </div>
             <div className="receipt-line">
               <span>ATOT:</span>
               <span>{formData.atotCode || 'N/A'}</span>
+            </div>
+            <div className="receipt-line">
+              <span>VTOT:</span>
+              <span>{formData.vtotCode || 'N/A'}</span>
             </div>
           </div>
 
           {/* Vehicle & Mobile */}
           <div className="receipt-section">
             <div className="receipt-line">
-              <span>VEH TYPE:</span>
-              <span>{formData.productType}</span>
-            </div>
-            <div className="receipt-line">
-              <span>VEH NO:</span>
+              <span>VEHICLE NO:</span>
               <span>{formData.vehicleNumber || 'Not Entered'}</span>
             </div>
             <div className="receipt-line">
-              <span>CUSTOMER MOBILE:</span>
+              <span>MOBILE NO:</span>
               <span>{formData.mobileNumber || 'Not Entered'}</span>
             </div>
           </div>
 
-          {/* Regulatory Info */}
-          {(formData.gstTin || formData.txnNumber) && (
-            <div className="receipt-section text-[9px]">
-              {formData.gstTin && (
-                <div className="receipt-line">
-                  <span>GST TIN:</span>
-                  <span>{formData.gstTin}</span>
-                </div>
-              )}
-              {formData.txnNumber && (
-                <div className="receipt-line">
-                  <span>TXN NO:</span>
-                  <span>{formData.txnNumber}</span>
-                </div>
-              )}
+          {/* Date & Time */}
+          <div className="receipt-section">
+            <div className="receipt-line">
+              <span>DATE:</span>
+              <span>{formatDate(formData.billDate)}</span>
             </div>
-          )}
+            <div className="receipt-line">
+              <span>TIME:</span>
+              <span>{formData.billTime}</span>
+            </div>
+          </div>
+
+          {/* Regulatory Information */}
+          <div className="receipt-section text-[9px]">
+            {formData.cstNumber && (
+              <div className="receipt-line">
+                <span>CSI NO:</span>
+                <span>{formData.cstNumber}</span>
+              </div>
+            )}
+            {formData.lstNumber && (
+              <div className="receipt-line">
+                <span>LST NO:</span>
+                <span>{formData.lstNumber}</span>
+              </div>
+            )}
+            {formData.vatNumber && (
+              <div className="receipt-line">
+                <span>VAT NO:</span>
+                <span>{formData.vatNumber}</span>
+              </div>
+            )}
+            {formData.attendant && (
+              <div className="receipt-line">
+                <span>ATTENDANT ID:</span>
+                <span>{formData.attendant}</span>
+              </div>
+            )}
+            {formData.fccDate && (
+              <div className="receipt-line">
+                <span>FCC DATE:</span>
+                <span>{formData.fccDate}</span>
+              </div>
+            )}
+            {formData.fccTime && (
+              <div className="receipt-line">
+                <span>FCC TIME:</span>
+                <span>{formData.fccTime}</span>
+              </div>
+            )}
+          </div>
 
           {/* Footer */}
           <div className="receipt-footer">
@@ -234,6 +248,7 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
 
         .receipt-amount {
           font-size: 14px;
+          font-weight: 700;
           margin-top: 4px;
           padding-top: 4px;
           border-top: 1px solid rgba(0, 0, 0, 0.3);

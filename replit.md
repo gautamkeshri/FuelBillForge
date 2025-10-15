@@ -12,6 +12,9 @@ A fully functional React-based web application that generates realistic Indian f
 - ✅ Realistic receipt styling with paper texture and zigzag edges
 - ✅ Print and download (PNG) functionality using html2canvas
 - ✅ Comprehensive README with installation instructions
+- ✅ Reorganized receipt layout to match real Indian fuel bills
+- ✅ Added new fields: Local ID, FCC Date, FCC Time
+- ✅ Enhanced regulatory section with CSI/LST/VAT numbers
 - ✅ All features tested and verified
 
 ## User Preferences
@@ -69,17 +72,67 @@ Preferred communication style: Simple, everyday language.
 5. ReceiptPreview component renders in real-time based on state
 6. ActionBar provides export options (print/download/reset)
 
+### Receipt Layout Structure
+
+The receipt follows a standardized Indian fuel bill format:
+
+1. **Header Section:**
+   - Logo (if custom brand)
+   - Fuel Brand Name
+   - Welcome Message (editable)
+
+2. **Station Information:**
+   - Location
+   - Station Code
+   - Telephone Number
+
+3. **Receipt Details:**
+   - Receipt Number
+   - Local ID
+   - FIP Number
+   - Nozzle Number
+   - Product Type
+
+4. **Transaction Details:**
+   - Preset Type
+   - Rate per Litre
+   - Volume
+   - Amount
+   - ATOT Code
+   - VTOT Code
+
+5. **Customer Information:**
+   - Vehicle Number
+   - Mobile Number
+
+6. **Date & Time:**
+   - Transaction Date
+   - Transaction Time
+
+7. **Regulatory Information:**
+   - CSI Number
+   - LST Number
+   - VAT Number
+   - Attendant ID
+   - FCC Date
+   - FCC Time
+
+8. **Footer:**
+   - Customizable closing message
+
 ### Component Architecture
 
 **Core Components:**
 - `BillForm`: Main input form with validation and auto-calculation logic
   - Includes logo upload section (visible when Custom brand selected)
   - Smart calculation based on preset type
+  - Organized in logical sections matching receipt layout
 - `BrandSelector`: Brand template selection (4 brands + Custom option)
   - Uses Lucide Upload icon for Custom option
 - `ReceiptPreview`: Thermal printer-style receipt renderer
   - Displays custom logo when available
   - Realistic paper texture and styling
+  - Conditional field display (only shows filled fields)
 - `ActionBar`: Sticky header with export/reset actions
 
 **Calculation Logic:**
@@ -92,6 +145,15 @@ Preferred communication style: Simple, everyday language.
 - IndianOil, Bharat Petroleum, HP Oil, Essar Oil
 - Each template has pre-configured station name
 - Custom template allows logo upload via FileReader API
+
+**Form Fields Available:**
+- Station: Name, Location, Code, Phone Number
+- Bill: Receipt Number, Local ID, FIP Number, Nozzle Number
+- Transaction: Product Type, Preset Type, Rate/Litre, Volume, Amount, ATOT, VTOT
+- Customer: Vehicle Number, Mobile Number
+- DateTime: Bill Date, Bill Time
+- Regulatory: CSI Number, LST Number, VAT Number, Attendant ID, FCC Date, FCC Time
+- Messages: Welcome Message, Footer Message
 
 ### External Dependencies
 
