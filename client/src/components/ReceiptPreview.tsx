@@ -1,4 +1,8 @@
 import { forwardRef } from 'react';
+import indianOilLogo from '@assets/stock_images/indian_oil_corporati_2dac40b0.jpg';
+import bharatLogo from '@assets/stock_images/bharat_petroleum_bpc_56ca14e9.jpg';
+import hpLogo from '@assets/stock_images/hp_hindustan_petrole_fc2f8db9.jpg';
+import essarLogo from '@assets/stock_images/essar_oil_logo_4df7fa66.jpg';
 
 interface ReceiptPreviewProps {
   formData: any;
@@ -15,6 +19,18 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
     return `${year}-${month}-${day}`;
   };
 
+  const getBrandLogo = () => {
+    const logoMap: Record<string, string> = {
+      indianoil: indianOilLogo,
+      bharat: bharatLogo,
+      hp: hpLogo,
+      essar: essarLogo,
+    };
+    return logoMap[formData.brandTemplate];
+  };
+
+  const displayLogo = formData.brandTemplate === 'custom' ? customLogo : getBrandLogo();
+
   return (
     <div className="flex items-center justify-center p-6 min-h-screen">
       <div className="receipt-paper">
@@ -23,16 +39,17 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
           className="receipt-content"
           data-testid="receipt-preview"
         >
-          {/* Zigzag Top Border */}
-          <div className="zigzag-top"></div>
+          {/* Torn Paper Top */}
+          <div className="torn-top"></div>
 
           {/* Logo + Fuel Brand + Welcome Message */}
           <div className="receipt-header">
-            {customLogo && formData.brandTemplate === 'custom' && (
-              <img src={customLogo} alt="Logo" className="w-20 h-20 mx-auto mb-2 object-contain" />
+            {displayLogo && (
+              <img src={displayLogo} alt="Brand Logo" className="w-20 h-20 mx-auto mb-2 object-contain" />
             )}
             <div className="text-lg font-bold tracking-wide">{formData.stationName}</div>
             <div className="mt-1 text-[20px] font-bold">{formData.welcomeMessage}</div>
+            <div className="divider-line"></div>
             {formData.stationLocation && (
               <div className="text-xs mt-2">{formData.stationLocation}</div>
             )}
@@ -174,8 +191,8 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
             </div>
           </div>
 
-          {/* Zigzag Bottom Border */}
-          <div className="zigzag-bottom"></div>
+          {/* Torn Paper Bottom */}
+          <div className="torn-bottom"></div>
         </div>
       </div>
 
@@ -213,13 +230,18 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
           text-align: center;
           margin-bottom: 12px;
           padding-bottom: 10px;
-          border-bottom: 2px solid #000;
+        }
+
+        .divider-line {
+          width: 100%;
+          height: 1px;
+          background: #000;
+          margin: 8px 0 4px 0;
         }
 
         .receipt-section {
           margin-bottom: 10px;
           padding-bottom: 8px;
-          border-bottom: 1px dashed rgba(0, 0, 0, 0.4);
         }
 
         .receipt-section:last-of-type {
@@ -235,15 +257,13 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
 
         .receipt-totals {
           font-weight: 700;
-          border-bottom: 2px solid #000;
         }
 
         .receipt-amount {
           font-size: 14px;
-          font-weight: 700;
+          font-weight: 400;
           margin-top: 4px;
           padding-top: 4px;
-          border-top: 1px solid rgba(0, 0, 0, 0.3);
         }
 
         .receipt-footer {
@@ -253,30 +273,30 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
           border-top: 2px solid #000;
         }
 
-        .zigzag-top {
+        .torn-top {
           position: absolute;
           top: 0;
           left: 0;
           right: 0;
-          height: 10px;
-          background: 
-            linear-gradient(135deg, #fff 25%, transparent 25%),
-            linear-gradient(225deg, #fff 25%, transparent 25%);
-          background-size: 10px 10px;
-          background-position: 0 0, 5px 0;
+          height: 8px;
+          background: #fff;
+          background-image: 
+            radial-gradient(circle at 3px 0px, transparent 3px, #fff 3px);
+          background-size: 6px 8px;
+          background-position: 0 0;
         }
 
-        .zigzag-bottom {
+        .torn-bottom {
           position: absolute;
           bottom: 0;
           left: 0;
           right: 0;
-          height: 10px;
-          background: 
-            linear-gradient(45deg, #fff 25%, transparent 25%),
-            linear-gradient(-45deg, #fff 25%, transparent 25%);
-          background-size: 10px 10px;
-          background-position: 0 0, 5px 0;
+          height: 8px;
+          background: #fff;
+          background-image: 
+            radial-gradient(circle at 3px 8px, transparent 3px, #fff 3px);
+          background-size: 6px 8px;
+          background-position: 0 0;
         }
 
         @media print {
