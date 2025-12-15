@@ -37,7 +37,9 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
       {displayLogo && (
         <img src={displayLogo} alt="Brand Logo" className="w-20 h-20 mx-auto mb-2 object-contain" />
       )}
-      <div className="text-lg font-bold tracking-wide">{formData.stationName}</div>
+      {formData.brandTemplate !== 'indianoil' && (
+        <div className="text-lg font-bold tracking-wide">{formData.stationName}</div>
+      )}
       <div className="mt-1 text-[20px] font-bold">{formData.welcomeMessage}</div>
       <div className="divider-line"></div>
       {formData.stationLocation && (
@@ -528,7 +530,7 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
 
       <style>{`
         .receipt-paper {
-          width: 300px;
+          width: 280px;
           background: #f8f8f8;
           border-radius: 3px;
           box-shadow: 

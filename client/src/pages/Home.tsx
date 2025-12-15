@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import BillForm from '@/components/BillForm';
 import ReceiptPreview from '@/components/ReceiptPreview';
 import ActionBar from '@/components/ActionBar';
+import JsonEditor from '@/components/JsonEditor';
 
 export default function Home() {
   const receiptRef = useRef<HTMLDivElement>(null);
@@ -109,6 +110,10 @@ export default function Home() {
     }));
   };
 
+  const handleJsonChange = (data: any) => {
+    setFormData(data);
+  };
+
   // Auto-generate transaction codes on mount
   useEffect(() => {
     handleGenerateCodes();
@@ -200,8 +205,8 @@ export default function Home() {
       
       <div className="grid lg:grid-cols-2 gap-6 p-6">
         <div className="lg:max-h-[calc(100vh-120px)] overflow-y-auto">
-          <BillForm 
-            formData={formData} 
+          <BillForm
+            formData={formData}
             onFormChange={handleFormChange}
             onGenerateCodes={handleGenerateCodes}
             customLogo={customLogo}
@@ -209,10 +214,15 @@ export default function Home() {
             onLogoRemove={handleLogoRemove}
           />
         </div>
-        
+
         <div className="lg:sticky lg:top-24 lg:h-[calc(100vh-120px)] overflow-y-auto">
           <ReceiptPreview ref={receiptRef} formData={formData} customLogo={customLogo} />
         </div>
+      </div>
+
+      {/* JSON Editor Section - Full Width */}
+      <div className="px-6 pb-6">
+        <JsonEditor formData={formData} onJsonChange={handleJsonChange} />
       </div>
     </div>
   );

@@ -86,18 +86,20 @@ export default function BillForm({
 
       <Card className="p-4 space-y-4">
         <h3 className="font-medium text-sm">Station Information</h3>
-        
+
         <div className="space-y-3">
-          <div>
-            <Label htmlFor="stationName" className="text-sm">Station Name</Label>
-            <Input
-              id="stationName"
-              data-testid="input-station-name"
-              value={formData.stationName}
-              onChange={(e) => onFormChange('stationName', e.target.value)}
-              placeholder="Bharat Petroleum"
-            />
-          </div>
+          {formData.brandTemplate !== 'indianoil' && (
+            <div>
+              <Label htmlFor="stationName" className="text-sm">Station Name</Label>
+              <Input
+                id="stationName"
+                data-testid="input-station-name"
+                value={formData.stationName}
+                onChange={(e) => onFormChange('stationName', e.target.value)}
+                placeholder="Bharat Petroleum"
+              />
+            </div>
+          )}
 
           <div>
             <Label htmlFor="stationLocation" className="text-sm">Location</Label>
