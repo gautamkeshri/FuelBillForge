@@ -1,8 +1,8 @@
 import { forwardRef } from 'react';
-import indianOilLogo from '@assets/stock_images/indian_oil_corporati_2dac40b0.jpg';
-import bharatLogo from '@assets/stock_images/bharat_petroleum_bpc_56ca14e9.jpg';
-import hpLogo from '@assets/stock_images/hp_hindustan_petrole_fc2f8db9.jpg';
-import essarLogo from '@assets/stock_images/essar_oil_logo_4df7fa66.jpg';
+import indianOilLogo from '@assets/stock_images/pump-logo-indian-oil.webp';
+import bharatLogo from '@assets/stock_images/pump-logo-bharat-petroleum.webp';
+import hpLogo from '@assets/stock_images/pump-logo-hp.webp';
+import essarLogo from '@assets/stock_images/pump-logo-essar-oil.webp';
 
 interface ReceiptPreviewProps {
   formData: any;
@@ -65,7 +65,7 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
           <span>{formData.receiptNumber}</span>
         </div>
         <div className="receipt-line">
-          <span>LOCAL ID:</span>
+          <span>FCC ID:</span>
           <span>{formData.localId || 'N/A'}</span>
         </div>
         <div className="receipt-line">
@@ -131,7 +131,7 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
         </div>
       </div>
 
-      {renderRegulatoryInfo()}
+      {renderRegulatoryInfo(true)}
     </>
   );
 
@@ -397,46 +397,81 @@ const ReceiptPreview = forwardRef<HTMLDivElement, ReceiptPreviewProps>(({ formDa
   );
 
   // Regulatory Information Component (shared)
-  const renderRegulatoryInfo = () => (
-    <div className="receipt-section text-[9px]">
-      {formData.cstNumber && (
-        <div className="receipt-line">
-          <span>CSI NO:</span>
-          <span>{formData.cstNumber}</span>
+  const renderRegulatoryInfo = (alwaysShow: boolean = false) => {
+    if (alwaysShow) {
+      // IndianOil: Always show all fields with "Not Available" as default
+      return (
+        <div className="receipt-section text-[9px]">
+          <div className="receipt-line">
+            <span>CST NO:</span>
+            <span>{formData.cstNumber || 'Not Available'}</span>
+          </div>
+          <div className="receipt-line">
+            <span>LST NO:</span>
+            <span>{formData.lstNumber || 'Not Available'}</span>
+          </div>
+          <div className="receipt-line">
+            <span>VAT NO:</span>
+            <span>{formData.vatNumber || 'Not Available'}</span>
+          </div>
+          <div className="receipt-line">
+            <span>ATTENDANT ID:</span>
+            <span>{formData.attendant || 'Not Available'}</span>
+          </div>
+          <div className="receipt-line">
+            <span>FCC DATE:</span>
+            <span>{formData.fccDate || 'Not Available'}</span>
+          </div>
+          <div className="receipt-line">
+            <span>FCC TIME:</span>
+            <span>{formData.fccTime || 'Not Available'}</span>
+          </div>
         </div>
-      )}
-      {formData.lstNumber && (
-        <div className="receipt-line">
-          <span>LST NO:</span>
-          <span>{formData.lstNumber}</span>
-        </div>
-      )}
-      {formData.vatNumber && (
-        <div className="receipt-line">
-          <span>VAT NO:</span>
-          <span>{formData.vatNumber}</span>
-        </div>
-      )}
-      {formData.attendant && (
-        <div className="receipt-line">
-          <span>ATTENDANT ID:</span>
-          <span>{formData.attendant}</span>
-        </div>
-      )}
-      {formData.fccDate && (
-        <div className="receipt-line">
-          <span>FCC DATE:</span>
-          <span>{formData.fccDate}</span>
-        </div>
-      )}
-      {formData.fccTime && (
-        <div className="receipt-line">
-          <span>FCC TIME:</span>
-          <span>{formData.fccTime}</span>
-        </div>
-      )}
-    </div>
-  );
+      );
+    }
+
+    // Other brands: Conditional rendering (only show if values exist)
+    return (
+      <div className="receipt-section text-[9px]">
+        {formData.cstNumber && (
+          <div className="receipt-line">
+            <span>CST NO:</span>
+            <span>{formData.cstNumber}</span>
+          </div>
+        )}
+        {formData.lstNumber && (
+          <div className="receipt-line">
+            <span>LST NO:</span>
+            <span>{formData.lstNumber}</span>
+          </div>
+        )}
+        {formData.vatNumber && (
+          <div className="receipt-line">
+            <span>VAT NO:</span>
+            <span>{formData.vatNumber}</span>
+          </div>
+        )}
+        {formData.attendant && (
+          <div className="receipt-line">
+            <span>ATTENDANT ID:</span>
+            <span>{formData.attendant}</span>
+          </div>
+        )}
+        {formData.fccDate && (
+          <div className="receipt-line">
+            <span>FCC DATE:</span>
+            <span>{formData.fccDate}</span>
+          </div>
+        )}
+        {formData.fccTime && (
+          <div className="receipt-line">
+            <span>FCC TIME:</span>
+            <span>{formData.fccTime}</span>
+          </div>
+        )}
+      </div>
+    );
+  };
 
   // Footer Component (shared)
   const renderFooter = () => (
